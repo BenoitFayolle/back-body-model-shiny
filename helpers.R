@@ -99,7 +99,7 @@ get_contours <- function(filter_list,im_convolved_list,pixel_quant_step,n_window
       curve_meta[[j_filter]] = get_curve_meta(im_contours_list[[j_filter]],n_window=n_window)
     }
   }
-  curve_meta
+  list(curve_meta=curve_meta,im_contours_list=im_contours_list)
 }
 
 get_kmean_clusters <- function(curve_meta,filter_list,target_width,
@@ -164,6 +164,16 @@ get_meta <- function(df_reload){
     mutate(mean_max_x = map_dbl(min_max_x,~max(.$min_x))) %>%
     mutate(median_min_x = map_dbl(min_max_x,~median(.$min_x))) %>%
     mutate(median_max_x = map_dbl(min_max_x,~median(.$max_x)))
+}
+
+
+
+break_curves_double_valued <- function(df){
+  df %>% as_tibble %>% mutate(dx=sign(x-lag(x))) %>%
+    filter(dx!=0) %>%
+    mutate(sign_change = if_else(dx-lag(dx)!=0 & !is.na(dx-lag(dx)),1,0)) %>%
+    mutate(curve_bis = cumsum(sign_change)+1) %>%
+    dplyr::select(-dx,-sign_change)
 }
 
 reconstruct_slope <- function(min_x,max_x,fit_slope,fit_intercept){

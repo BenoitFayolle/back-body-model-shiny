@@ -5,15 +5,18 @@ library(purrr);library(tidyr)
 library(ggplot2)
 library(shiny)
 
-if (Sys.info()$user == 'ben')
-   use_condaenv(condaenv="r-reticulate")
-else if (Sys.info()$user == 'ubuntu')
-   use_virtualenv('/home/ubuntu/miniconda3/envs/r-reticulate')
+info_sys = Sys.info()
+if (info_sys['user'] == 'ben'){
+  use_condaenv(condaenv="r-reticulate")
+  is_delete_image = F
+} else if (info_sys['user'] == 'ubuntu'){
+  use_virtualenv('/home/ubuntu/miniconda3/envs/r-reticulate')
+  is_delete_image = T
+}
 
 source_python("gabor_convolve.py")
 source_python("gabor_filter_bank_fun.py")
 
-source("contour_detect_helpers.R")
 source("helpers.R")
 
 ## input params
@@ -22,7 +25,7 @@ target_aspect_ratio = 1
 target_height = target_width * target_aspect_ratio
 crop_heights = c("high","mid","low")
 height_percent_crop = c(25,50,75)
-horizontal_correction_coef = 0.96
+horizontal_correction_coef = 1
 min_width = 300.0
 width_percent = 20.0
 
