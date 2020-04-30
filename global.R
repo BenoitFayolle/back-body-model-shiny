@@ -4,8 +4,11 @@ library(reticulate)
 library(purrr);library(tidyr)
 library(ggplot2)
 library(shiny)
-if(Sys.info()$user == "ben")
-  use_condaenv("r-reticulate")
+
+if (Sys.info()$user == 'ben')
+   use_condaenv(condaenv="r-reticulate")
+else if (Sys.info()$user == 'ubuntu')
+   use_virtualenv('/home/ubuntu/miniconda3/envs/r-reticulate')
 
 source_python("gabor_convolve.py")
 source_python("gabor_filter_bank_fun.py")

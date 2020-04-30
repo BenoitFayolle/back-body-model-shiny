@@ -19,7 +19,7 @@ shinyUI(fluidPage(
                                        placeholder = "No file selected"),
                              plotOutput("raw_patches",height="700px"),
                              textOutput("prediction"),
-                             passwordInput("input_pw", label="Enter password", value = "gagli", width = NULL,
+                             passwordInput("input_pw", label="Enter password", value = "", width = NULL,
                                            placeholder = NULL)
                             ),
             mainPanel(plotOutput("original_image")))
