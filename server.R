@@ -9,6 +9,10 @@ shinyServer(function(input, output) {
         full_jpg_name = input$jpg_name$datapath
         jpg_name = input$jpg_name$name
         img_full = readImage(full_jpg_name)
+        
+        if(dim(img_full)[3] == 4)
+            img_full = img_full[,,1:3]
+        
         width = dim(img_full)[2]
         validate(need(width >= min_width,label='min width'))
         height = dim(img_full)[1]

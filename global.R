@@ -9,14 +9,13 @@ info_sys = Sys.info()
 if (info_sys['user'] == 'ben'){
   use_condaenv(condaenv="r-reticulate")
   is_delete_image = F
-} else if (info_sys['user'] == 'ubuntu'){
+} else if (info_sys['user'] == 'shiny'){
   use_virtualenv('/home/ubuntu/miniconda3/envs/r-reticulate')
   is_delete_image = T
 }
 
 source_python("gabor_convolve.py")
 source_python("gabor_filter_bank_fun.py")
-
 source("helpers.R")
 
 ## input params
